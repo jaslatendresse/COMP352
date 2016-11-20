@@ -1,4 +1,4 @@
-
+ 
 public interface DataStructure {
   
 	public void put(int key, int value);
