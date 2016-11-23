@@ -9,6 +9,12 @@ public class HashTable implements DataStructure {
 	public enum State{EMPTY, OCCUPIED, AVAILABLE};
 	
 	
+	public HashTable(){
+		table = new HashEntry[size];
+		for(int i = 0; i < size; i++){
+			table[i] = null;
+		}
+	}
 	public HashTable(int tableSize){
 		if(!checkPrime(tableSize)){
 			size = nextPrime(tableSize);
@@ -19,6 +25,7 @@ public class HashTable implements DataStructure {
 			table[i].state = State.EMPTY;
 		}
 	}
+	
 	
 	public boolean checkPrime(int n){
 		BigInteger b = new BigInteger(String.valueOf(n));
@@ -94,7 +101,26 @@ public class HashTable implements DataStructure {
 		}
 		return hash;
 	}
-
+	
+	public int nextKey(int key){
+		int hash = (key%size);
+		HashEntry temp;
+		if(table[hash].getNext() != null){
+			temp = table[hash].getNext();
+			return temp.key;
+		}
+		return -1;
+	}
+	
+	public int prevKey(int key){
+		int hash = (key%size);
+		HashEntry temp;
+		if(table[hash].getPrev() != null){
+			temp = table[hash].getPrev();
+			return temp.key;
+		}
+		return -1;
+	}
 }
 
 class HashEntry {
@@ -117,11 +143,19 @@ class HashEntry {
 		this.prev = null; 
 	}
 	
-	public int getKey(){
+	public Integer getKey(){
 		return key;
 	}
 	
-	public int getValue(){
+	public Integer getValue(){
 		return value;
+	}
+	
+	public HashEntry getNext(){
+		return next;
+	}
+	
+	public HashEntry getPrev(){
+		return prev; 
 	}
 }

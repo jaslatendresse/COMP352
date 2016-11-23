@@ -73,7 +73,26 @@ public class Sequence implements DataStructure {
 		}
 		return -1;
 	}
-
+	
+	public int nextKey(int key){
+		Entry entry = new Entry();
+		for(int i = 0; i < size; i++){
+			if(entry.getKey() == key && entry.getNext().getKey() != null){
+				return entry.getNext().getKey();
+			}
+		}
+		return -1;
+	}
+	
+	public int prevKey(int key){
+		Entry entry = new Entry();
+		for(int i = 0; i < size; i++){
+			if(entry.getKey() == key && entry.getPrev().getKey() != null){
+				return entry.getPrev().getKey();
+			}
+		}
+		return -1; 
+	}
 }
 
 class Entry{
