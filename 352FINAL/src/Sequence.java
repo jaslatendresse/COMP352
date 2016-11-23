@@ -38,14 +38,40 @@ public class Sequence implements DataStructure {
 
 	@Override
 	public void remove(int key) {
+		Entry entry = new Entry(); 
+		Entry temp = null; 
 		
+		for(int i = 0; i < size; i++){
+			if(entry.key == key){
+				temp = entry; 
+				entry.prev.next = temp.next; 
+				entry.next.prev = temp.prev; 
+				
+				for(int j = entry.index; j < size; j++){
+					temp.index--; 
+					temp = temp.next;
+				}
+				size--; 
+				return; 
+			}
+			else{
+				entry = entry.next;
+			}
+		}
 		
+		System.out.println("Entry with key " + key + " was not found.");
 	}
 
 	@Override
 	public int get(int key) {
-		// TODO Auto-generated method stub
-		return 0;
+		Entry entry = new Entry(); 
+		for(int i = 0; i < size; i++){
+			if(entry.key == key){
+				return entry.value; 
+			}
+			entry = entry.next;
+		}
+		return -1;
 	}
 
 }
