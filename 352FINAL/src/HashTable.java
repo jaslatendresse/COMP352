@@ -1,7 +1,5 @@
 import java.math.BigInteger;
 
-
-  
 public class HashTable implements DataStructure {
 	 
 	private static int size;
@@ -102,6 +100,7 @@ public class HashTable implements DataStructure {
 		return hash;
 	}
 	
+	@Override
 	public int nextKey(int key){
 		int hash = (key%size);
 		HashEntry temp;
@@ -111,7 +110,7 @@ public class HashTable implements DataStructure {
 		}
 		return -1;
 	}
-	
+	@Override
 	public int prevKey(int key){
 		int hash = (key%size);
 		HashEntry temp;

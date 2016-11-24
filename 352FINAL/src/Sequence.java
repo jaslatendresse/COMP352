@@ -74,6 +74,7 @@ public class Sequence implements DataStructure {
 		return -1;
 	}
 	
+	@Override
 	public int nextKey(int key){
 		Entry entry = new Entry();
 		for(int i = 0; i < size; i++){
@@ -84,6 +85,7 @@ public class Sequence implements DataStructure {
 		return -1;
 	}
 	
+	@Override
 	public int prevKey(int key){
 		Entry entry = new Entry();
 		for(int i = 0; i < size; i++){
