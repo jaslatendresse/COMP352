@@ -5,7 +5,17 @@ public class SmartULS {
 	boolean isSequence = false;
 	DataStructure DS;
 	
+	public static void main(String[] args){
+	
+		/*
+		 * If using prevKey or nextKey, we have to make sure to add
+		 * if(nextKey < 0) System.out.println("next key could not be found);
+		 * 
+		 */
+	}
+	
 	public SmartULS(int size){
+		setSmartThresholdULS(size);
 		if(isHashTable){
 			DS = new HashTable();
 		}
@@ -23,29 +33,24 @@ public class SmartULS {
 		}
 	}
 	
-	public void add(SmartULS s, int key, int value){
+	public void add(int key, int value){
 		DS.put(key, value);
 	}
 	
-	public void remove(SmartULS s, int key){
+	public void remove(int key){
 		DS.remove(key);
 	}
 	
-	public int getValues(SmartULS s, int key){
+	public int getValues(int key){
 		return DS.get(key);
 	}
 	
-	public int nextKey(SmartULS s, int key){
-		if(DS.nextKey(key) < 1){
-			System.out.println("Next key could not be found");
-		}
+	public int nextKey(int key){
 		return DS.nextKey(key);
 	}
 	
-	public int prevKey(SmartULS s, int key){
-		if(DS.prevKey(key) < 1){
-			System.out.println("Previous key could not be found");
-		}
+	public int prevKey(int key){
+		
 		return DS.prevKey(key);
 	}
 }
