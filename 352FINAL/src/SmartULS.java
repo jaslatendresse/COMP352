@@ -55,22 +55,32 @@ public class SmartULS {
 	}
 	
 	public int nextKey(SmartULS s, int key){
+		int theNextKey = -1;
 		if(isHashTable){
-			s.HT.nextKey(key);
+			theNextKey = s.HT.nextKey(key);
+			if(theNextKey < 0){
+			}
 		}
 		if(isSequence){
-			s.SQ.nextKey(key);
+			theNextKey = s.SQ.nextKey(key);
 		}
-		return -1;
+		if(theNextKey < 0){
+			System.out.println("The next key could not be found");
+		}
+		return theNextKey;
 	}
 	
 	public int prevKey(SmartULS s, int key){
+		int thePrevKey = -1;
 		if(isHashTable){
-			s.HT.prevKey(key);
+			thePrevKey = s.HT.prevKey(key);
 		}
 		if(isSequence){
-			s.SQ.prevKey(key);
+			thePrevKey = s.SQ.prevKey(key);
 		}
-		return -1;
+		if(thePrevKey<0){
+			System.out.println("The previous key could not be found.");
+		}
+		return thePrevKey;
 	}
 }
