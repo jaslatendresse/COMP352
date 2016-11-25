@@ -4,7 +4,6 @@ public class HashTable implements DataStructure {
 	 
 	private static int size;
 	public HashEntry[] table;
-	public enum State{EMPTY, OCCUPIED, AVAILABLE};
 	
 	
 	public HashTable(){
@@ -20,7 +19,7 @@ public class HashTable implements DataStructure {
 		table = new HashEntry[size];
 		for(int i = 0; i<size; i++){
 			table[i] = new HashEntry();
-			table[i].state = State.EMPTY;
+
 		}
 	}
 	
@@ -59,7 +58,6 @@ public class HashTable implements DataStructure {
 			entry.next = table[hash + 1];
 			entry.prev = table[hash - 1];
 		}
-		entry.state = State.OCCUPIED;
 	}
 
 	@Override
@@ -70,7 +68,6 @@ public class HashTable implements DataStructure {
 			hash = (hash - 1) % size;
 		}
 		table[hash] = null;
-		table[hash].state = State.AVAILABLE;
 		
 	}
 		
@@ -124,7 +121,6 @@ public class HashTable implements DataStructure {
 
 class HashEntry {
 
-	protected HashTable.State state;
 	protected Integer key;
 	protected Integer value; 
 	protected HashEntry next;
