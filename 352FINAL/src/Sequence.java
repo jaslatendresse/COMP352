@@ -4,6 +4,8 @@ public class Sequence implements DataStructure {
 	public Entry first; 
 	public Entry last;
 	public int size; 
+	public int[] keysToSort;
+	public int[] temp;
 	
 	public boolean isEmpty(){
 		return size == 0; 
@@ -95,6 +97,51 @@ public class Sequence implements DataStructure {
 		}
 		return -1; 
 	}
+	
+	@Override
+	public int[] sort(){
+		Entry entry = first;
+		keysToSort = new int[size];
+		for(int i = 0; i<size; i++){
+			if(entry.getKey() != null){
+				keysToSort[i] = entry.getKey();
+				entry = entry.next;
+			}
+		}
+		this.temp = new int[size];
+		mergesort(0, size - 1);
+		return keysToSort; 
+	}
+	
+	private void mergesort(int low, int high){
+		if(low < high){
+			int mid = low + (high - low)/2;
+			mergesort(low, mid);
+			mergesort(mid + 1, high);
+			merge(low, mid, high);
+		}
+	}
+	
+	private void merge(int low, int mid, int high){
+		for(int i = low; i <=high; i++){
+			temp[i] = keysToSort[i];
+		}
+		int i = low; 
+		int j = mid + 1;
+		int k = low; 
+		
+		while(i <= mid && j <= high){
+			if(temp[i] <= temp[j]){
+				keysToSort[k] = temp[i];
+				i++;
+			}
+			else{
+				keysToSort[k] = temp[j];
+				j++;
+			}
+			k++;
+		}
+	}
 }
 
 class Entry{
@@ -113,7 +160,7 @@ class Entry{
 		this.key = key;
 		this.value = value; 
 	}
-	
+
 	public Integer getKey(){
 		return key; 
 	}

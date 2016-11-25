@@ -6,6 +6,7 @@ public interface DataStructure {
 	public int get(int key);
 	public int nextKey(int key);
 	public int prevKey(int key);
+	public int[] sort();
 
 }
  

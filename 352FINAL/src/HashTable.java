@@ -5,8 +5,10 @@ import java.math.BigInteger;
 public class HashTable implements DataStructure {
 	 
 	private static int size;
+	protected int nbOfEntries;
 	public HashEntry[] table;
-	
+	public int[] keysToSort;
+	public int[] temp;
 	
 	public HashTable(){
 		table = new HashEntry[size];
@@ -25,7 +27,6 @@ public class HashTable implements DataStructure {
 		}
 	}
 	
-	
 	public boolean checkPrime(int n){
 		BigInteger b = new BigInteger(String.valueOf(n));
 		
@@ -39,7 +40,6 @@ public class HashTable implements DataStructure {
 
 	@Override
 	public void put(int key, int value) {
-		size++;
 		int hash = hashFunction(key);
 		
 		HashEntry entry = new HashEntry(key, value);
@@ -60,6 +60,7 @@ public class HashTable implements DataStructure {
 			entry.next = table[hash + 1];
 			entry.prev = table[hash - 1];
 		}
+		nbOfEntries++;
 	}
 
 	@Override
@@ -70,7 +71,7 @@ public class HashTable implements DataStructure {
 			hash = (hash - 1) % size;
 		}
 		table[hash] = null;
-		
+		nbOfEntries--;
 	}
 		
 
@@ -119,6 +120,51 @@ public class HashTable implements DataStructure {
 		}
 		return -1;
 	}
+	
+	@Override
+	public int[] sort(){
+		keysToSort = new int[nbOfEntries];
+		int elem = 0; 
+		for(int i = 0; i<size; i++){
+			if(table[i].getKey() != null){
+				keysToSort[elem] = table[i].getKey();
+				elem++;
+			}
+		}
+		this.temp = new int[nbOfEntries];
+		mergesort(0, nbOfEntries - 1);
+		return keysToSort; 
+	}
+	
+	private void mergesort(int low, int high){
+		if(low < high){
+			int mid = low + (high - low)/2;
+			mergesort(low, mid);
+			mergesort(mid + 1, high);
+			merge(low, mid, high);
+		}
+	}
+	
+	private void merge(int low, int mid, int high){
+		for(int i = low; i <=high; i++){
+			temp[i] = keysToSort[i];
+		}
+		int i = low; 
+		int j = mid + 1;
+		int k = low; 
+		
+		while(i <= mid && j <= high){
+			if(temp[i] <= temp[j]){
+				keysToSort[k] = temp[i];
+				i++;
+			}
+			else{
+				keysToSort[k] = temp[j];
+				j++;
+			}
+			k++;
+		}
+	}
 }
 
 class HashEntry {
@@ -127,6 +173,7 @@ class HashEntry {
 	protected Integer value; 
 	protected HashEntry next;
 	protected HashEntry prev;
+
 	
 	
 	HashEntry(){

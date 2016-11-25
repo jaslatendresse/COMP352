@@ -1,3 +1,4 @@
+import java.util.Random;
 
 public class SmartULS {
 	private final static int THRESHOLD = 1000;
@@ -22,9 +23,11 @@ public class SmartULS {
 		setSmartThresholdULS(size);
 		if(isHashTable){
 			DS = new HashTable();
+			System.out.println("The data structure used is Hashtable");
 		}
 		else if(isSequence){
 			DS = new Sequence();
+			System.out.println("The data structure used is Sequence");
 		}
 	}
 	
@@ -57,4 +60,19 @@ public class SmartULS {
 		
 		return DS.prevKey(key);
 	}
+	
+	public int generate(){
+		Random r = new Random();
+		int randomKey;
+		do{
+			randomKey = 1000000 + r.nextInt(90000000);
+		}while(DS.get(randomKey) != -1);
+		
+		return randomKey;
+	}
+	
+	public void allKeys(){
+		int[] sortedKeys = DS.sort();
+	}
+	
 }
