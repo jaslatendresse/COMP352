@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Random;
 
 public class SmartULS {
@@ -12,9 +13,12 @@ public class SmartULS {
 		 * If using prevKey or nextKey, we have to make sure to add
 		 * if(nextKey < 0) System.out.println("next key could not be found);
 		 * 
-		 * Generate
-		 * allKeys
-		 * rangeKeys
+		 * 
+		 * What is left to do: 
+		 * nextKey (BinarySearchTree)
+		 * prevKey (BinarySearchTree)
+		 * rangeKeys (SmartULS)
+		 * Test
 		 * 
 		 */
 	}
@@ -40,23 +44,23 @@ public class SmartULS {
 		}
 	}
 	
-	public void add(int key, int value){
+	public void add(String key, int value){
 		DS.put(key, value);
 	}
 	
-	public void remove(int key){
+	public void remove(String key){
 		DS.remove(key);
 	}
 	
-	public int getValues(int key){
+	public int getValues(String key){
 		return DS.get(key);
 	}
 	
-	public int nextKey(int key){
+	public String nextKey(String key){
 		return DS.nextKey(key);
 	}
 	
-	public int prevKey(int key){
+	public String prevKey(String key){
 		
 		return DS.prevKey(key);
 	}
@@ -64,15 +68,19 @@ public class SmartULS {
 	public int generate(){
 		Random r = new Random();
 		int randomKey;
+		String strVal;
 		do{
 			randomKey = 1000000 + r.nextInt(90000000);
-		}while(DS.get(randomKey) != -1);
+			strVal = Integer.toString(randomKey);
+		}while(DS.get(strVal) != -1);
 		
 		return randomKey;
 	}
 	
 	public void allKeys(){
 		int[] sortedKeys = DS.sort();
+		
+		System.out.println(Arrays.toString(sortedKeys));
 	}
 	
 }

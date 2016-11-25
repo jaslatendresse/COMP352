@@ -39,7 +39,7 @@ public class HashTable implements DataStructure {
 	}
 
 	@Override
-	public void put(int key, int value) {
+	public void put(String key, int value) {
 		int hash = hashFunction(key);
 		
 		HashEntry entry = new HashEntry(key, value);
@@ -64,8 +64,8 @@ public class HashTable implements DataStructure {
 	}
 
 	@Override
-	public void remove(int key) {
-		int hash = (key % size);
+	public void remove(String key) {
+		int hash = (Integer.parseInt(key) % size);
 		
 		while(table[hash].key != null && table[hash].getKey() != key){
 			hash = (hash - 1) % size;
@@ -76,8 +76,8 @@ public class HashTable implements DataStructure {
 		
 
 	@Override
-	public int get(int key) {
-		int hash = (key%size);
+	public int get(String key) {
+		int hash = (Integer.parseInt(key)%size);
 		
 		while(table[hash].key != null && table[hash].getKey() != key){
 			hash = (hash + 1) % size;
@@ -91,7 +91,7 @@ public class HashTable implements DataStructure {
 		
 	}
 	
-	private int hashFunction(Integer i){
+	private int hashFunction(String i){
 		int hash = i.hashCode();
 		hash %= table.length;
 		if(hash < 0){
@@ -101,24 +101,24 @@ public class HashTable implements DataStructure {
 	}
 	
 	@Override
-	public int nextKey(int key){
-		int hash = (key%size);
+	public String nextKey(String key){
+		int hash = (Integer.parseInt(key)%size);
 		HashEntry temp;
 		if(table[hash].getNext() != null){
 			temp = table[hash].getNext();
 			return temp.key;
 		}
-		return -1;
+		return null;
 	}
 	@Override
-	public int prevKey(int key){
-		int hash = (key%size);
+	public String prevKey(String key){
+		int hash = (Integer.parseInt(key)%size);
 		HashEntry temp;
 		if(table[hash].getPrev() != null){
 			temp = table[hash].getPrev();
 			return temp.key;
 		}
-		return -1;
+		return null;
 	}
 	
 	@Override
@@ -127,7 +127,7 @@ public class HashTable implements DataStructure {
 		int elem = 0; 
 		for(int i = 0; i<size; i++){
 			if(table[i].getKey() != null){
-				keysToSort[elem] = table[i].getKey();
+				keysToSort[elem] = Integer.parseInt(table[i].getKey());
 				elem++;
 			}
 		}
@@ -169,7 +169,7 @@ public class HashTable implements DataStructure {
 
 class HashEntry {
 
-	protected Integer key;
+	protected String key;
 	protected Integer value; 
 	protected HashEntry next;
 	protected HashEntry prev;
@@ -180,14 +180,14 @@ class HashEntry {
 		this.key = null;
 		this.value = null;
 	}
-	HashEntry(int key, int value){
+	HashEntry(String key, int value){
 		this.key = key;
 		this.value = value; 
 		this.next = null;
 		this.prev = null; 
 	}
 	
-	public Integer getKey(){
+	public String getKey(){
 		return key;
 	}
 	

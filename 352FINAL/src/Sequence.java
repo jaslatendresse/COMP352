@@ -18,7 +18,7 @@ public class Sequence implements DataStructure {
 	}
 	
 	@Override
-	public void put(int key, int value) {
+	public void put(String key, int value) {
 		Entry e = new Entry(); 
 		
 		if(isEmpty()){
@@ -39,12 +39,12 @@ public class Sequence implements DataStructure {
 	
 
 	@Override
-	public void remove(int key) {
+	public void remove(String key) {
 		Entry entry = new Entry(); 
 		Entry temp = null; 
 		
 		for(int i = 0; i < size; i++){
-			if(entry.key == key){
+			if(entry.key.equals(key)){
 				temp = entry; 
 				entry.prev.next = temp.next; 
 				entry.next.prev = temp.prev; 
@@ -65,10 +65,10 @@ public class Sequence implements DataStructure {
 	}
 
 	@Override
-	public int get(int key) {
+	public int get(String key) {
 		Entry entry = new Entry(); 
 		for(int i = 0; i < size; i++){
-			if(entry.key == key){
+			if(entry.key.equals(key)){
 				return entry.value; 
 			}
 			entry = entry.next;
@@ -77,25 +77,25 @@ public class Sequence implements DataStructure {
 	}
 	
 	@Override
-	public int nextKey(int key){
+	public String nextKey(String key){
 		Entry entry = new Entry();
 		for(int i = 0; i < size; i++){
-			if(entry.getKey() == key && entry.getNext().getKey() != null){
+			if(entry.getKey().equals(key) && entry.getNext().getKey() != null){
 				return entry.getNext().getKey();
 			}
 		}
-		return -1;
+		return null;
 	}
 	
 	@Override
-	public int prevKey(int key){
+	public String prevKey(String key){
 		Entry entry = new Entry();
 		for(int i = 0; i < size; i++){
 			if(entry.getKey() == key && entry.getPrev().getKey() != null){
 				return entry.getPrev().getKey();
 			}
 		}
-		return -1; 
+		return null; 
 	}
 	
 	@Override
@@ -104,7 +104,7 @@ public class Sequence implements DataStructure {
 		keysToSort = new int[size];
 		for(int i = 0; i<size; i++){
 			if(entry.getKey() != null){
-				keysToSort[i] = entry.getKey();
+				keysToSort[i] = Integer.parseInt(entry.getKey());
 				entry = entry.next;
 			}
 		}
@@ -145,7 +145,7 @@ public class Sequence implements DataStructure {
 }
 
 class Entry{
-	protected Integer key;
+	protected String key;
 	protected Integer value;
 	protected Integer index; 
 	protected Entry next;
@@ -156,12 +156,12 @@ class Entry{
 		this.value = null;
 	}
 	
-	public Entry(int key, int value){
+	public Entry(String key, int value){
 		this.key = key;
 		this.value = value; 
 	}
 
-	public Integer getKey(){
+	public String getKey(){
 		return key; 
 	}
 	
