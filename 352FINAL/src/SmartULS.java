@@ -11,6 +11,10 @@ public class SmartULS {
 		 * If using prevKey or nextKey, we have to make sure to add
 		 * if(nextKey < 0) System.out.println("next key could not be found);
 		 * 
+		 * Generate
+		 * allKeys
+		 * rangeKeys
+		 * 
 		 */
 	}
 	
