@@ -1,4 +1,3 @@
-
 public class Sequence implements DataStructure {
 
 	public Entry first; 
@@ -19,7 +18,7 @@ public class Sequence implements DataStructure {
 	
 	@Override
 	public void put(String key, int value) {
-		Entry e = new Entry(); 
+		Entry e = new Entry();
 		
 		if(isEmpty()){
 			first = e; 
@@ -66,7 +65,7 @@ public class Sequence implements DataStructure {
 
 	@Override
 	public int get(String key) {
-		Entry entry = new Entry(); 
+		Entry entry = this.first; // CHANGED FROM: Entry entry = new Entry(); (prevents null pointer exception
 		for(int i = 0; i < size; i++){
 			if(entry.key.equals(key)){
 				return entry.value; 
@@ -78,25 +77,28 @@ public class Sequence implements DataStructure {
 	
 	@Override
 	public String nextKey(String key){
-		Entry entry = new Entry();
-		for(int i = 0; i < size; i++){
-			if(entry.getKey().equals(key) && entry.getNext().getKey() != null){
-				return entry.getNext().getKey();
-			}
+		Entry entry = this.first;
+		
+		while(entry.getNext() != null) {		
+			if (entry.getKey().equals(key))
+				return entry.getNext().getKey();		
+			entry = entry.getNext();
 		}
 		return null;
 	}
 	
 	@Override
 	public String prevKey(String key){
-		Entry entry = new Entry();
-		for(int i = 0; i < size; i++){
-			if(entry.getKey() == key && entry.getPrev().getKey() != null){
-				return entry.getPrev().getKey();
-			}
+		Entry entry = this.last;	
+		
+		while(entry.getPrev() != null) {		
+			if (entry.getKey().equals(key))
+				return entry.getPrev().getKey();		
+			entry = entry.getPrev();
 		}
 		return null; 
 	}
+		
 	
 	@Override
 	public int[] sort(){
