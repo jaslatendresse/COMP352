@@ -90,11 +90,12 @@ public class SmartULS {
 	}
 	
 	public String nextKey(String key){
+		DS.sort();
 		return DS.nextKey(key);
 	}
 	
 	public String prevKey(String key){
-		
+		DS.sort();
 		return DS.prevKey(key);
 	}
 	
