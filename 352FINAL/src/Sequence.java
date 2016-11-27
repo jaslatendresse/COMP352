@@ -54,8 +54,14 @@ public class Sequence implements DataStructure {
 		for(int i = 0; i < size; i++){ // loops through the sequence 
 			if(entry.key.equals(key)){
 				temp = entry; 
+<<<<<<< HEAD
 				entry.prev.next = temp.next;
 				entry.next.prev = temp.prev; 		
+=======
+				entry.prev.next = temp.next; 
+				entry.next.prev = temp.prev; 
+				
+>>>>>>> master
 			}
 			else{
 				entry = entry.next;

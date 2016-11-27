@@ -12,6 +12,7 @@ public class SmartULS {
 		String stringSize;
 		Scanner userInput = new Scanner(System.in);
 		boolean inputIsInt = false;
+<<<<<<< HEAD
 		
 	// Testing with test files
 		try{
@@ -66,6 +67,9 @@ public class SmartULS {
 			System.out.println("File not found");
 		}
 		
+=======
+		//Testing with test files
+>>>>>>> master
 		try{
 			Scanner in = new Scanner(new File("src/file3.txt"));
 			SmartULS uls = new SmartULS(999);
@@ -86,13 +90,21 @@ public class SmartULS {
 				}
 			}
 			System.out.println("Entries added to SmartULS");
+<<<<<<< HEAD
 			System.out.println();
+=======
+			
+>>>>>>> master
 			in.close();
 		}catch(IOException e){
 			System.out.println("File not found");
 		}
 		
+<<<<<<< HEAD
 	//Testing with user input
+=======
+		//Testing with user input
+>>>>>>> master
 		do{
 			System.out.println("Enter the deisred size of the SmartULS");
 			stringSize = userInput.next();
@@ -100,6 +112,7 @@ public class SmartULS {
 				inputIsInt = true; 
 			}
 		}while(inputIsInt == false);
+<<<<<<< HEAD
 	}
 	
 	/**
@@ -122,6 +135,19 @@ public class SmartULS {
 	 * Constructor for SmartULS
 	 * @param size number of expected entries of the SmartULS
 	 */
+=======
+	}
+	
+	public static boolean isNum(String str){
+		try{
+			int i = Integer.parseInt(str);
+		}
+		catch(NumberFormatException e){
+			return false;
+		}
+		return true;
+	}
+>>>>>>> master
 	public SmartULS(int size){
 		setSmartThresholdULS(size);
 		if(isBST){

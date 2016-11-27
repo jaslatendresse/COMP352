@@ -1,4 +1,5 @@
 public class BinarySearchTree implements DataStructure {
+<<<<<<< HEAD
 /* ============================================================ Instance Variable ============================================================ */
 	private NodeEntry root;
 	
@@ -6,6 +7,13 @@ public class BinarySearchTree implements DataStructure {
 	@Override
 	public void put(String key, int value) {
 		if(root == null){ // if there's no root
+=======
+
+	private NodeEntry root;
+	@Override
+	public void put(String key, int value) {
+		if(root == null){
+>>>>>>> master
 			root = new NodeEntry(key, value);
 		}
 		else{
@@ -17,6 +25,7 @@ public class BinarySearchTree implements DataStructure {
 	@Override
 	public void remove(String key) {
 		NodeEntry removingEntry = getNodeEntry(key);
+<<<<<<< HEAD
 		remove(key, removingEntry);	
 	}
 	
@@ -25,11 +34,18 @@ public class BinarySearchTree implements DataStructure {
 	 * @param key Key of the entry to be removed
 	 * @param entry entry to be removed
 	 */
+=======
+		remove(key, removingEntry);
+		
+	}
+	
+>>>>>>> master
 	private void remove(String key, NodeEntry entry){
 		if(entry == null){
 			return;
 		}
 		if(key.compareTo(entry.key) < 0){
+<<<<<<< HEAD
 			remove(key, entry.left); // left child
 		}
 		else if(key.compareTo(entry.key)>0){
@@ -44,6 +60,22 @@ public class BinarySearchTree implements DataStructure {
 			else if(entry.left != null){
 				entry = entry.left;
 			}
+=======
+			remove(key, entry.left);
+		}
+		else if(key.compareTo(entry.key)>0){
+			remove(key,entry.right);
+		}
+		else{
+			if(entry.left != null && entry.right != null){
+				NodeEntry leftMax = maxElem(entry.left);
+				entry.key = leftMax.key;
+				remove(leftMax.key, entry.left);
+			}
+			else if(entry.left != null){
+				entry = entry.left;
+			}
+>>>>>>> master
 			else if(entry.right != null){
 				entry = entry.right;
 			}
@@ -52,12 +84,16 @@ public class BinarySearchTree implements DataStructure {
 			}
 		}
 	}
+<<<<<<< HEAD
 
 	/**
 	 * Finds the entry that is the most rightward in the tree.
 	 * @param entry starting point in the tree
 	 * @return rightmost entry
 	 */
+=======
+	
+>>>>>>> master
 	private NodeEntry maxElem(NodeEntry entry){
 		if(entry.right == null){
 			return entry;
@@ -67,11 +103,14 @@ public class BinarySearchTree implements DataStructure {
 		}
 	}
 	
+<<<<<<< HEAD
 	/**
 	 * Finds the node entry with a given key
 	 * @param key Key of the desired node entry
 	 * @return node with given key
 	 */
+=======
+>>>>>>> master
 	private NodeEntry getNodeEntry(String key){
 		NodeEntry curr = root; 
 		Integer id = Integer.parseInt(key);
@@ -96,6 +135,7 @@ public class BinarySearchTree implements DataStructure {
 	}
 
 	@Override
+<<<<<<< HEAD
 	public String getFirstKey() {
 		if (this.root == null)
 			return null;
@@ -104,6 +144,8 @@ public class BinarySearchTree implements DataStructure {
 	}
 	
 	@Override
+=======
+>>>>>>> master
 	public String nextKey(String key) {
 		NodeEntry curr = getNodeEntry(key);
 		if(curr != null){
@@ -117,7 +159,12 @@ public class BinarySearchTree implements DataStructure {
 		}
 		else{
 			return "Key not found";
+<<<<<<< HEAD
 		}	
+=======
+		}
+		
+>>>>>>> master
 	}
 
 	@Override
@@ -137,12 +184,15 @@ public class BinarySearchTree implements DataStructure {
 		}
 	}
 	
+<<<<<<< HEAD
 	/**
 	 * Finds the previous node entry to a given node.
 	 * @param root root node of the given node
 	 * @param first given node
 	 * @return previous node to the given node
 	 */
+=======
+>>>>>>> master
 	private NodeEntry getPrev(NodeEntry root, NodeEntry first){
 		if(first.left != null){
 			return maxElem(first.left);
@@ -164,11 +214,14 @@ public class BinarySearchTree implements DataStructure {
 		return prev; 
 	}
 	
+<<<<<<< HEAD
 	/**
 	 * Finds the succeeding node entry to a given node.
 	 * @param first given node
 	 * @return next node to the given node
 	 */
+=======
+>>>>>>> master
 	private NodeEntry getNext(NodeEntry first){
 		NodeEntry next = null; 
 		NodeEntry parentNext = null; 
@@ -191,29 +244,39 @@ public class BinarySearchTree implements DataStructure {
 		//Binary search trees sort the keys when inserting them
 		return null;
 	}
+
 	
 }
 
 class NodeEntry{
+<<<<<<< HEAD
 /* ============================================================ Instance Variables ============================================================ */
+=======
+>>>>>>> master
 	protected String key;
 	protected Integer value; 
 	protected NodeEntry left, right; 
 	
+<<<<<<< HEAD
 /* ================================================================== Methods ================================================================= */
 	/**
 	 * Constructor
 	 * @param key
 	 * @param value
 	 */
+=======
+>>>>>>> master
 	public NodeEntry(String key, Integer value){
 		this.key = key; 
 		this.value = value; 
 	}
 	
+<<<<<<< HEAD
 	/**
 	 * See public void put(String key, int value) of the same class
 	 */
+=======
+>>>>>>> master
 	public void put(String key, Integer value){
 		if(key.compareTo(this.key) < 0){
 			if(left!=null){
@@ -249,3 +312,5 @@ class NodeEntry{
 	}
 	
 }
+
+
