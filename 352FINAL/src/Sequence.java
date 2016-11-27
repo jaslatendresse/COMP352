@@ -58,13 +58,14 @@ public class Sequence implements DataStructure {
 
 	@Override
 	public int get(String key) {
-		Entry entry = this.first; // CHANGED FROM: Entry entry = new Entry(); (prevents null pointer exception
+		Entry entry = this.first; 
 		for(int i = 0; i < size; i++){
 			if(entry.key.equals(key)){
 				return entry.value; 
 			}
 			entry = entry.next;
 		}
+		System.out.println("Key was not found");
 		return -1;
 	}
 	
@@ -77,6 +78,7 @@ public class Sequence implements DataStructure {
 				return entry.getNext().getKey();		
 			entry = entry.getNext();
 		}
+		System.out.println("Next key was not found");
 		return null;
 	}
 	
