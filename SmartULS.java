@@ -12,7 +12,60 @@ public class SmartULS {
 		String stringSize;
 		Scanner userInput = new Scanner(System.in);
 		boolean inputIsInt = false;
-		//Testing with test files
+		
+	// Testing with test files
+		try{
+			Scanner in = new Scanner(new File("src/file1.txt"));
+			SmartULS uls = new SmartULS(999);
+			System.out.println("SmartULS created");
+			
+			int randomVal = 0; 
+			
+			System.out.println("Inserting entries to the SmartULS");
+			String newKey;
+			while(in.hasNextInt()){
+				try{
+					newKey = String.format("%08d", in.nextInt());
+					uls.add(newKey, randomVal);
+					randomVal++;
+				}
+				catch(InputMismatchException e){
+					System.out.println("Key format is wrong");
+				}
+			}
+			System.out.println("Entries added to SmartULS");
+			System.out.println();	
+			in.close();
+		}catch(IOException e){
+			System.out.println("File not found");
+		}
+		
+		try{
+			Scanner in = new Scanner(new File("src/file2.txt"));
+			SmartULS uls = new SmartULS(999);
+			System.out.println("SmartULS created");
+			
+			int randomVal = 0; 
+			
+			System.out.println("Inserting entries to the SmartULS");
+			String newKey;
+			while(in.hasNextInt()){
+				try{
+					newKey = String.format("%08d", in.nextInt());
+					uls.add(newKey, randomVal);
+					randomVal++;
+				}
+				catch(InputMismatchException e){
+					System.out.println("Key format is wrong");
+				}
+			}
+			System.out.println("Entries added to SmartULS");
+			System.out.println();
+			in.close();
+		}catch(IOException e){
+			System.out.println("File not found");
+		}
+		
 		try{
 			Scanner in = new Scanner(new File("src/file3.txt"));
 			SmartULS uls = new SmartULS(999);
@@ -33,13 +86,13 @@ public class SmartULS {
 				}
 			}
 			System.out.println("Entries added to SmartULS");
-			
+			System.out.println();
 			in.close();
 		}catch(IOException e){
 			System.out.println("File not found");
 		}
 		
-		//Testing with user input
+	//Testing with user input
 		do{
 			System.out.println("Enter the deisred size of the SmartULS");
 			stringSize = userInput.next();
@@ -125,13 +178,14 @@ public class SmartULS {
 	
 	public int rangeKey(String key1, String key2) {
 		int numbOfKeys = 0;
-		int[] sortedKeys = DS.sort();
-		for(int i = 0; i < sortedKeys.length; i++) {
-			if (sortedKeys[i] > Integer.parseInt(key1) && sortedKeys[i] < Integer.parseInt(key2))
+		String key = this.DS.getFirstKey();
+		
+		while (key != null) {
+			if( key.compareTo(key1) > 0 && key.compareTo(key2) < 0)
 				numbOfKeys++;
-			else if (sortedKeys[i] > Integer.parseInt(key2))
-				break;
+			key = this.DS.nextKey(key);
 		}
+		
 		return numbOfKeys;
 	}
 	
