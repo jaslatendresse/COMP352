@@ -1,67 +1,132 @@
-import java.util.Arrays;
-import java.util.Random;
-
+import java.util.*;
+import java.io.File;
+import java.io.IOException;
 public class SmartULS {
-	private final static int THRESHOLD = 8; // CHANGE IT BACK TO 1000!!!!!!
-	boolean isHashTable = false;
+	private final static int THRESHOLD = 1000; 
+	boolean isBST = false;
 	boolean isSequence = false;
 	DataStructure DS;
 	
-	public static void main(String[] args){
-	// TEST: CONSTRUCTORS
-		SmartULS small = new SmartULS(5); // should be a sequence
+	public static void main(String[] args) throws IOException{
 	
-	// TEST: SmartULS.add() (sequence)
-		SmartULS.add(small, "-43", 45); // adding a negative key
-		SmartULS.add(small, "0", 23);   // adding key of 0
-		SmartULS.add(small, "2", 21);
-	 // SmartULS.add(small, "2", 4);	 // adding same key twice: causes infinite loop when print keys out
-		SmartULS.add(small, "3", 7);
-		SmartULS.add(small, "4", 46);
-		SmartULS.add(small, "5", 423);
-		SmartULS.add(small, "6", 3);
-		SmartULS.add(small, "7", 54); // adding an extra value
+		String stringSize;
+		Scanner userInput = new Scanner(System.in);
+		boolean inputIsInt = false;
 		
-	// TEST: SmartULS.nextKey() (sequence)
-		System.out.println("TEST: SmartULS.nextKey() (sequence)");
-		String smallKey = "-43"; // first key
-		do {
-			System.out.println("key: "+ smallKey + "  value: " + small.DS.get(smallKey));
-			smallKey = small.nextKey(smallKey);
-		}
-		while(smallKey != null);
-		System.out.println();
-		
-		
-	// TEST: SmartULS.prevKey() (sequence)
-		System.out.println("TEST: SmartULS.prevKey() (sequence)");
-		smallKey = "7"; // last key
-		do {
-			System.out.println("key: "+ smallKey + "  value: " + small.DS.get(smallKey));
-				smallKey = small.prevKey(smallKey);
+	// Testing with test files
+		try{
+			Scanner in = new Scanner(new File("src/file1.txt"));
+			SmartULS uls = new SmartULS(999);
+			System.out.println("SmartULS created");
+			
+			int randomVal = 0; 
+			
+			System.out.println("Inserting entries to the SmartULS");
+			String newKey;
+			while(in.hasNextInt()){
+				try{
+					newKey = String.format("%08d", in.nextInt());
+					uls.add(newKey, randomVal);
+					randomVal++;
+				}
+				catch(InputMismatchException e){
+					System.out.println("Key format is wrong");
+				}
 			}
-		while(smallKey != null);
-		System.out.println();
+			System.out.println("Entries added to SmartULS");
+			System.out.println();	
+			in.close();
+		}catch(IOException e){
+			System.out.println("File not found");
+		}
 		
-	
+		try{
+			Scanner in = new Scanner(new File("src/file2.txt"));
+			SmartULS uls = new SmartULS(999);
+			System.out.println("SmartULS created");
+			
+			int randomVal = 0; 
+			
+			System.out.println("Inserting entries to the SmartULS");
+			String newKey;
+			while(in.hasNextInt()){
+				try{
+					newKey = String.format("%08d", in.nextInt());
+					uls.add(newKey, randomVal);
+					randomVal++;
+				}
+				catch(InputMismatchException e){
+					System.out.println("Key format is wrong");
+				}
+			}
+			System.out.println("Entries added to SmartULS");
+			System.out.println();
+			in.close();
+		}catch(IOException e){
+			System.out.println("File not found");
+		}
 		
+		try{
+			Scanner in = new Scanner(new File("src/file3.txt"));
+			SmartULS uls = new SmartULS(999);
+			System.out.println("SmartULS created");
+			
+			int randomVal = 0; 
+			
+			System.out.println("Inserting entries to the SmartULS");
+			String newKey;
+			while(in.hasNextInt()){
+				try{
+					newKey = String.format("%08d", in.nextInt());
+					uls.add(newKey, randomVal);
+					randomVal++;
+				}
+				catch(InputMismatchException e){
+					System.out.println("Key format is wrong");
+				}
+			}
+			System.out.println("Entries added to SmartULS");
+			System.out.println();
+			in.close();
+		}catch(IOException e){
+			System.out.println("File not found");
+		}
 		
-		/*
-		 * If using prevKey or nextKey, we have to make sure to add
-		 * if(nextKey < 0) System.out.println("next key could not be found);
-		 * 
-		 * Generate
-		 * allKeys
-		 * rangeKeys
-		 * 
-		 */
+	//Testing with user input
+		do{
+			System.out.println("Enter the deisred size of the SmartULS");
+			stringSize = userInput.next();
+			if(isNum(stringSize)){
+				inputIsInt = true; 
+			}
+		}while(inputIsInt == false);
 	}
 	
+	/**
+	 * Verifies if a string contains only numbers.
+	 * @param str string to be verified
+	 * @return true if all the characters are numbers,
+	 * 		   false otherwise
+	 */
+	public static boolean isNum(String str){
+		try{
+			int i = Integer.parseInt(str);
+		}
+		catch(NumberFormatException e){
+			return false;
+		}
+		return true;
+	}
+	
+	/**
+	 * Constructor for SmartULS
+	 * @param size number of expected entries of the SmartULS
+	 */
 	public SmartULS(int size){
 		setSmartThresholdULS(size);
-		if(isHashTable){
-			DS = new HashTable();
-			System.out.println("The data structure used is Hashtable");
+		if(isBST){
+			DS = new BinarySearchTree();
+			System.out.println("The data structure used is Binary Search Tree");
 		}
 		else if(isSequence){
 			DS = new Sequence();
@@ -69,36 +134,73 @@ public class SmartULS {
 		}
 	}
 	
+	/**
+	 * Sets the type of data structure that will be used by the SmartULS
+	 * @param size number of expected entries of the SmartULS
+	 */
 	public void setSmartThresholdULS(int size){
 		if(size >= THRESHOLD){
-			isHashTable = true;
+			isBST = true;
 		}
 		else{
 			isSequence = true; 
 		}
 	}
 	
-	public static void add(SmartULS s, String key, int value){
-		s.DS.put(key, value);
+	/**
+	 * Adds an entry to the SmartULS
+	 * @param key Key of the new entry
+	 * @param value Value of the new entry
+	 */
+	public void add(String key, int value){
+		DS.put(key, value);
 	}
 	
+	/**
+	 * Removes an entry in the SmartULS object.
+	 * @param key key of the entry to be removed
+	 */
 	public void remove(String key){
 		DS.remove(key);
 	}
 	
+	/**
+	 * Finds the value of a given entry in the SmartULS object.
+	 * @param key key of the given entry
+	 * @return value of the given entry
+	 */
 	public int getValues(String key){
 		return DS.get(key);
 	}
 	
+	/**
+	 * Finds the key succeeding a given entry in the SmartULS object.
+	 * @param key key of the given entry
+	 * @return key of the entry succeeding the given entry
+	 */
 	public String nextKey(String key){
+		if(isBST){
+			DS.sort();
+		}
 		return DS.nextKey(key);
 	}
 	
+	/**
+	 * Finds the key preceding a given entry in the SmartULS object.
+	 * @param key  key of the given entry
+	 * @return key of the entry preceding the given entry
+	 */
 	public String prevKey(String key){
-		
+		if(isBST){
+			DS.sort();
+		}
 		return DS.prevKey(key);
 	}
 	
+	/**
+	 * Generates a random key for a given entry in the SmartULS object.
+	 * @return random key
+	 */
 	public int generate(){
 		Random r = new Random();
 		int randomKey;
@@ -112,9 +214,33 @@ public class SmartULS {
 		return randomKey;
 	}
 	
+	/**
+	 * Prints the sorted keys if the entries in the SmartULS object.
+	 */
 	public void allKeys(){
 		int[] sortedKeys = DS.sort();
 		System.out.println(Arrays.toString(sortedKeys));
 	}
+	
+	/**
+	 * Finds the number of keys in the SmartULS object that are within a given range.
+	 * @param key1 lower bound of the range
+	 * @param key2 upper bound of the range
+	 * @return number of keys inside the range
+	 */
+	public int rangeKey(String key1, String key2) {
+		int numbOfKeys = 0;
+		String key = this.DS.getFirstKey();
+		
+		while (key != null) {
+			if( key.compareTo(key1) > 0 && key.compareTo(key2) < 0)
+				numbOfKeys++;
+			key = this.DS.nextKey(key);
+		}
+		
+		return numbOfKeys;
+	}
+	
+	
 	
 }

@@ -1,174 +1,251 @@
 public class BinarySearchTree implements DataStructure {
-
-	public NodeEntry root;
+/* ============================================================ Instance Variable ============================================================ */
+	private NodeEntry root;
 	
-	public BinarySearchTree(){
-		this.root = null;
-	}
-
+/* ================================================================== Methods ================================================================= */
 	@Override
 	public void put(String key, int value) {
-		NodeEntry entry = new NodeEntry(key, value);
-		
-		if(root == null){
-			root = entry;
-			return;
+		if(root == null){ // if there's no root
+			root = new NodeEntry(key, value);
 		}
-		NodeEntry curr = root; 
-		NodeEntry parent = null;
-		
-		while(true){
-			parent = curr; 
-			if(Integer.parseInt(key) < Integer.parseInt(curr.key)){
-				curr = curr.left;
-				if(curr == null){
-					parent.left = entry;
-					return; 
-				}
-			}
-			else{
-				curr = curr.right;
-				if(curr == null){
-					parent.right = entry;
-					return;
-				}
-			}
+		else{
+			root.put(key, value);
 		}
 		
 	}
 
 	@Override
 	public void remove(String key) {
-		NodeEntry parent = root;
-		NodeEntry current = root;
-		boolean isLeftChild = false;
-		while(!current.key.equals(key)){
-			parent = current; 
-			if(Integer.parseInt(current.key)>Integer.parseInt(key)){
-				isLeftChild = true; 
-				current = current.left;
+		NodeEntry removingEntry = getNodeEntry(key);
+		remove(key, removingEntry);	
+	}
+	
+	/**
+	 * Removes an entry in the binary search tree.
+	 * @param key Key of the entry to be removed
+	 * @param entry entry to be removed
+	 */
+	private void remove(String key, NodeEntry entry){
+		if(entry == null){
+			return;
+		}
+		if(key.compareTo(entry.key) < 0){
+			remove(key, entry.left); // left child
+		}
+		else if(key.compareTo(entry.key)>0){
+			remove(key,entry.right); // right child
+		}
+		else{
+			if(entry.left != null && entry.right != null){ // no child
+				NodeEntry leftMax = maxElem(entry.left);
+				entry.key = leftMax.key;
+				remove(leftMax.key, entry.left); // removes the leftmost entry in the tree
+			}
+			else if(entry.left != null){
+				entry = entry.left;
+			}
+			else if(entry.right != null){
+				entry = entry.right;
 			}
 			else{
-				isLeftChild = false;
-				current = current.right;
-			}
-			if(current == null){
-				return; 
+				entry = null;
 			}
 		}
-		if(current.left == null && current.right == null){
-			if(current == root){
-				root = null;
-			}
-			if(isLeftChild){
-				parent.left = null;
-			}
-			else{
-				parent.right = null;
-			}
+	}
+
+	/**
+	 * Finds the entry that is the most rightward in the tree.
+	 * @param entry starting point in the tree
+	 * @return rightmost entry
+	 */
+	private NodeEntry maxElem(NodeEntry entry){
+		if(entry.right == null){
+			return entry;
 		}
-		
-		else if(current.right == null){
-			if(current == root){
-				root = current.left;
-			}
-			else if(isLeftChild){
-				parent.left = current.left;
-			}
-			else{
-				parent.right = current.left;
-			}
-		}
-		else if(current.left == null){
-			if(current == root){
-				root = current.right;
-			}
-			else if(isLeftChild){
-				parent.left = current.right;
-			}
-			else{
-				parent.right = current.right;
-			}
-		}
-		else if(current.left != null && current.right != null){
-			NodeEntry next = getNext(current);
-			if(current == root){
-				root = next;
-			}
-			else if(isLeftChild){
-				parent.left = next;
-			}
-			else{
-				parent.right = next;
-			}
-			next.left = current.left;
+		else{
+			return maxElem(entry.right);
 		}
 	}
 	
-	public NodeEntry getNext(NodeEntry entry){
-		NodeEntry successor = null;
-		NodeEntry successorParent = null;
-		NodeEntry current = entry.right;
+	/**
+	 * Finds the node entry with a given key
+	 * @param key Key of the desired node entry
+	 * @return node with given key
+	 */
+	private NodeEntry getNodeEntry(String key){
+		NodeEntry curr = root; 
+		Integer id = Integer.parseInt(key);
 		
-		while(current != null){
-			successorParent = successor;
-			successor = current;
-			current = current.left;
+		while(curr != null){
+			if(Integer.parseInt(curr.key) == id){
+				return curr;
+			}
+			else if(Integer.parseInt(curr.key) > id){
+				curr = curr.left;
+			}
+			else{
+				curr = curr.right;
+			}
 		}
-		
-		if(successor != entry.right){
-			successorParent.left = successor.right;
-			successor.right = entry.right;
-		}
-		return successor;
+		return null;
 	}
 
 	@Override
 	public int get(String key) {
-		NodeEntry current = root; 
-		while(current != null){
-			if(current.key.equals(key)){
-				return current.value;
-			}
-			else if(Integer.parseInt(current.key) > Integer.parseInt(key)){
-				current = current.left;
-			}
-			else{
-				current = current.right;
-			}
-		}
-		return -1;
+		return root == null ? null : root.get(key);
 	}
 
 	@Override
+	public String getFirstKey() {
+		if (this.root == null)
+			return null;
+		else
+			return root.key;
+	}
+	
+	@Override
 	public String nextKey(String key) {
-		return null;
+		NodeEntry curr = getNodeEntry(key);
+		if(curr != null){
+			NodeEntry next = getNext(curr);
+			if(next != null){
+				return next.key;
+			}
+			else{
+				return "No next key found";
+			}
+		}
+		else{
+			return "Key not found";
+		}	
 	}
 
 	@Override
 	public String prevKey(String key) {
-		// TODO Auto-generated method stub
-		return null;
+		NodeEntry entry = getNodeEntry(key);
+		if(entry != null){
+			NodeEntry prev = getPrev(root, entry);
+			if(prev != null){
+				return prev.key;
+			}
+			else{
+				return "No previous key";
+			}
+		}
+		else{
+			return "Key not found";
+		}
+	}
+	
+	/**
+	 * Finds the previous node entry to a given node.
+	 * @param root root node of the given node
+	 * @param first given node
+	 * @return previous node to the given node
+	 */
+	private NodeEntry getPrev(NodeEntry root, NodeEntry first){
+		if(first.left != null){
+			return maxElem(first.left);
+		}
+		NodeEntry prev = null;
+		
+		while(root != null){
+			if(Integer.parseInt(first.key) == Integer.parseInt(root.key)){
+				break;
+			}
+			else if(Integer.parseInt(first.key) < Integer.parseInt(root.key)){
+				root = root.left;
+			}
+			else if(Integer.parseInt(first.key) > Integer.parseInt(root.key)){
+				prev = root;
+				root = root.right;
+			}
+		}
+		return prev; 
+	}
+	
+	/**
+	 * Finds the succeeding node entry to a given node.
+	 * @param first given node
+	 * @return next node to the given node
+	 */
+	private NodeEntry getNext(NodeEntry first){
+		NodeEntry next = null; 
+		NodeEntry parentNext = null; 
+		NodeEntry curr = first.right;
+		
+		while(curr!=null){
+			parentNext = next;
+			next = curr; 
+			curr = curr.left;
+		}
+		if(next != first.right){
+			parentNext.left = next.right;
+			next.right = first.right;
+		}
+		return next;
 	}
 
 	@Override
 	public int[] sort() {
-		//Tree is already sorted so sorting method is useless in this case. 
+		//Binary search trees sort the keys when inserting them
 		return null;
 	}
 	
 }
 
 class NodeEntry{
-	protected NodeEntry left;
-	protected NodeEntry right;
-	String key;
-	int value; 
+/* ============================================================ Instance Variables ============================================================ */
+	protected String key;
+	protected Integer value; 
+	protected NodeEntry left, right; 
 	
-	public NodeEntry(String key, int value){
-		this.key = key;
+/* ================================================================== Methods ================================================================= */
+	/**
+	 * Constructor
+	 * @param key
+	 * @param value
+	 */
+	public NodeEntry(String key, Integer value){
+		this.key = key; 
 		this.value = value; 
-		this.left = null;
-		this.right = null;
 	}
+	
+	/**
+	 * See public void put(String key, int value) of the same class
+	 */
+	public void put(String key, Integer value){
+		if(key.compareTo(this.key) < 0){
+			if(left!=null){
+				left.put(key, value);
+			}
+			else{
+				left = new NodeEntry(key, value);
+			}
+		}
+		else if(key.compareTo(this.key) > 0){
+			if(right != null){
+				right.put(key, value);
+			}
+			else{
+				right = new NodeEntry(key, value);
+			}
+		}
+		else{
+			this.value = value; 
+		}
+	}
+	
+	public Integer get(String key){
+		if(this.key.equals(key)){
+			return value; 
+		}
+		if(key.compareTo(this.key) < 0){
+			return left == null ? null : left.get(key);
+		}
+		else{
+			return right == null ? null : right.get(key);
+		}
+	}
+	
 }
