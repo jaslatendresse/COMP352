@@ -32,7 +32,6 @@ public class Sequence implements DataStructure {
 		}
 		e.key = key;
 		e.value = value; 
-		e.index = size; 
 		size++;
 	}
 	
@@ -48,18 +47,12 @@ public class Sequence implements DataStructure {
 				entry.prev.next = temp.next; 
 				entry.next.prev = temp.prev; 
 				
-				for(int j = entry.index; j < size; j++){
-					temp.index--; 
-					temp = temp.next;
-				}
-				size--; 
-				return; 
 			}
 			else{
 				entry = entry.next;
 			}
 		}
-		
+		size--; 
 		System.out.println("Entry with key " + key + " was not found.");
 	}
 
@@ -149,7 +142,6 @@ public class Sequence implements DataStructure {
 class Entry{
 	protected String key;
 	protected Integer value;
-	protected Integer index; 
 	protected Entry next;
 	protected Entry prev;
 	
