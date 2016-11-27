@@ -10,17 +10,17 @@ public class SmartULS {
 	public static void main(String[] args){
 	// TEST: CONSTRUCTORS
 		SmartULS small = new SmartULS(5); // should be a sequence
-	
+		
 	// TEST: SmartULS.add() (sequence)
-		SmartULS.add(small, "-43", 45); // adding a negative key
-		SmartULS.add(small, "0", 23);   // adding key of 0
-		SmartULS.add(small, "2", 21);
+		small.add("-43", 45); // adding a negative key
+		small.add("0", 23);   // adding key of 0
+		small.add("2", 21);
 	 // SmartULS.add(small, "2", 4);	 // adding same key twice: causes infinite loop when print keys out
-		SmartULS.add(small, "3", 7);
-		SmartULS.add(small, "4", 46);
-		SmartULS.add(small, "5", 423);
-		SmartULS.add(small, "6", 3);
-		SmartULS.add(small, "7", 54); // adding an extra value
+		small.add("3", 7);
+		small.add("4", 46);
+		small.add("5", 423);
+		small.add("6", 3);
+		small.add("7", 54); // adding an extra value
 		
 	// TEST: SmartULS.nextKey() (sequence)
 		System.out.println("TEST: SmartULS.nextKey() (sequence)");
@@ -77,8 +77,8 @@ public class SmartULS {
 		}
 	}
 	
-	public static void add(SmartULS s, String key, int value){
-		s.DS.put(key, value);
+	public void add(String key, int value){
+		DS.put(key, value);
 	}
 	
 	public void remove(String key){
