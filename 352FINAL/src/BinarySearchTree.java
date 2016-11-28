@@ -73,8 +73,9 @@ public class BinarySearchTree implements DataStructure {
 	 * @return node with given key
 	 */
 	private NodeEntry getNodeEntry(String key){
-		NodeEntry curr = root; 
-		Integer id = Integer.parseInt(key);
+		NodeEntry curr = root;
+		
+		int id = Integer.parseInt(key);
 		
 		while(curr != null){
 			if(Integer.parseInt(curr.key) == id){
@@ -129,17 +130,18 @@ public class BinarySearchTree implements DataStructure {
 	@Override
 	public String prevKey(String key) {
 		NodeEntry entry = getNodeEntry(key);
+		
 		if(entry != null){
 			NodeEntry prev = getPrev(root, entry);
 			if(prev != null){
 				return prev.key;
 			}
 			else{
-				return "No previous key";
+				return null;
 			}
 		}
 		else{
-			return "Key not found";
+			return null;
 		}
 	}
 	
