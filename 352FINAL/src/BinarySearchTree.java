@@ -92,7 +92,13 @@ public class BinarySearchTree implements DataStructure {
 
 	@Override
 	public int get(String key) {
-		return root == null ? null : root.get(key);
+		NodeEntry entry = getNodeEntry(key);
+		if(entry != null){
+			return entry.value;
+		}
+		else{
+			return -1;
+		}
 	}
 
 	@Override
@@ -233,18 +239,6 @@ class NodeEntry{
 		}
 		else{
 			this.value = value; 
-		}
-	}
-	
-	public Integer get(String key){
-		if(this.key.equals(key)){
-			return value; 
-		}
-		if(key.compareTo(this.key) < 0){
-			return left == null ? null : left.get(key);
-		}
-		else{
-			return right == null ? null : right.get(key);
 		}
 	}
 	
