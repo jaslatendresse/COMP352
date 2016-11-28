@@ -48,7 +48,7 @@ public class Sequence implements DataStructure {
 
 	@Override
 	public void remove(String key) {
-		Entry entry = new Entry(); 
+		Entry entry = first; 
 		Entry temp = null; 
 		
 		for(int i = 0; i < size; i++){ // loops through the sequence 
@@ -62,7 +62,6 @@ public class Sequence implements DataStructure {
 			}
 		}
 		size--; 
-		System.out.println("Entry with key " + key + " was not found.");
 	}
 
 	@Override
